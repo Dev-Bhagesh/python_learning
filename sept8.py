@@ -1,0 +1,9 @@
+numbers = tuple(map(int, input("Enter the tuple: ").split(' ')))
+print(f'numbers => {numbers}')
+first , *middle , last = numbers
+print(f'first => {first}')
+print(f'middle => {middle}')
+print(f'last => {last}')
+# mid = tuple(middle)
+num = (last,*middle,first)
+print(f'num => {num}')
