@@ -1,3 +1,5 @@
+import random
+
 class GameCharacter:
 
     GameName = 'Hero Hunter'
@@ -9,7 +11,7 @@ class GameCharacter:
         self.CharGender = Gender
         # self.CharDamage = 100
         self.defence = 50
-        self.attackPower = 10
+        self.attackPower = random.randint(0,100)
 
 
     def CharInfo(self):
@@ -18,22 +20,29 @@ class GameCharacter:
         print(self.CharRole)
 
     def TakeDamage(self,Damage):
-        self.health = self.health - Damage
+        self.health = max(self.health - Damage)
+        print(f'{self.CharName} : Got damaged of {Damage} -> remaining HP {self.health}')
         # print(self.CharDamage)
 
     def Attack(self,target):
+        print(f'{self.CharName} Attacked {target.CharName} with AttackPower of -> {self.attackPower}')
         target.TakeDamage(self.attackPower)
-        print(f'{target.CharName} got damaged')
+        # print(f'{target.CharName} got damaged')
 
 hero = GameCharacter('Batman','Hero','Male')
 villen = GameCharacter('Joker','villen','Male')
-villenHealth = villen.health
-heroHealth = hero.health
-print(f'Batman health : {heroHealth}')
-print(f'Joker Heath : {villenHealth}')
 
-hero.Attack(villen)
-villenHealth = villen.health
-heroHealth = hero.health
-print(f'{villenHealth} remaining health of Joker')
-print(f'Batman health : {heroHealth}')
+while(hero.health >= 0 or villen.health >= 0):
+    turn = random.randint(1,100)
+    if turn % 2 == 0:
+        hero.Attack(villen)
+    else:
+        villen.Attack(hero)
+
+    if hero.health <= 0:
+        print(f"****** {villen.CharName} Won The Battle ******")
+        break
+    elif villen.health <= 0:
+        print(f"****** {hero.CharName} Won The Battle ******")
+        break
+
