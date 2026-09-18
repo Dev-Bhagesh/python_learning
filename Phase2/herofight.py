@@ -14,7 +14,6 @@ class GameCharacter:
         self.CharName = Name
         self.CharRole = Role
         self.CharGender = Gender
-        # self.CharDamage = 100
         self.defence = 50
         self.normalAttack = 10
         self.spacialAttack = 35
@@ -32,17 +31,13 @@ class GameCharacter:
     def TakeDamage(self,Damage):
         self.health = max(0,self.health - Damage)
         print(f'💥 {self.RED}{self.CharName} : Got damaged of {Damage} -> remaining HP {self.health}{self.RESET} \n')
-        # print('\n')
-        # print(self.CharDamage)
         if self.health <= 40 :
             if self.postionCount > 0:
                 self.HealHP()
                 self.postionCount = self.postionCount - 1
                 print(f'{self.GREEN}🔮 {self.CharName}:  healed himself with healing postion and Current HP :{self.health} and remaining postions are :- {self.postionCount} {self.RESET} \n')
-                # print('\n')
             else:
                 print(f'{self.YELLOW}{self.CharName}:No more healing potions remaining , potions count : {self.postionCount} {self.RESET} \n')
-                # print('\n')
 
     def Attack(self,target):
         attackType = random.randint(0,100)
@@ -57,9 +52,7 @@ class GameCharacter:
             logo = "🎭"
 
         print(f'{logo} ⚔️  {self.BLUE}{self.CharName}\033[0m ' f' \033[94mAttacked {target.CharName} with AttackPower of -> {attackDone} {self.BLUE} \n')
-        # print(f'\n')
         target.TakeDamage(attackDone)
-        # print(f'{target.CharName} got damaged')
 
 hero = GameCharacter('Batman','Hero','Male')
 villen = GameCharacter('Joker','villen','Male')
