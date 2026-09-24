@@ -1,16 +1,24 @@
-def calculate_total(*args):
-    total = 0
-    for i in args:
-        total += i
-    print(f'{total}')
+class Player():
+    def __init__(self,name,healt):
+        self.name = name
+        self.__healt = healt
 
-# calculate_total(5, 10, 15, 20, 25)
+    @property
+    def health(self):
+        print(f'Health is : {self.__healt}')
 
-def Show_character(**kwargs):
-    for key,value in kwargs.items():
-        print(f'{key} : {value}')
+    @health.setter
+    def health(self,value):
+        if(value <= 0):
+            self.__healt = 0
+        elif(value >= 100):
+            self.__healt = 100
+        else:
+            self.__healt = value
 
-Show_character(name="Shadow",
-    level=20,
-    health=150,
-    weapon="Katana")
+pla = Player('batman',100)
+pla.health
+pla.health = 500
+pla.health
+pla.health = 50
+pla.health
