@@ -10,4 +10,3 @@ class GameSession():
 
 with GameSession():
     print('Game is playing')
-    value = 0/0
