@@ -56,27 +56,44 @@
 #     value = 0/0
 
 # 6. All combined 
+# class GameSession2():
+#     def __enter__(self):
+#         print('Starting the generator')
 
-class GameSession2():
-    def __enter__(self):
-        print('Starting the generator')
+#     def __exit__(self,exc_type,exc,tb):
+#         print('Ending the generator')
 
-    def __exit__(self,exc_type,exc,tb):
-        print('Ending the generator')
+#     def genNum(self,start,end):
+#         value = start
+#         while value <= end:
+#             yield value
+#             value += 100
 
-    def genNum(self,start,end):
-        value = start
-        while value <= end:
-            yield value
-            value += 100
+#     def gen(self):
+#         li = [100,250,450,700,900]
+#         for i in li:
+#             yield i
 
-    def gen(self):
-        li = [100,250,450,700,900]
-        for i in li:
-            yield i
+# gene = GameSession2()
 
-gene = GameSession2()
+# with GameSession2():
+#     for i in gene.gen():
+#         print(i)
 
-with GameSession2():
-    for i in gene.gen():
-        print(i)
+# 7. Final Question
+
+number = [10,20,30]
+itr = iter(number)
+print(next(itr))
+print(next(itr))
+print(next(itr))
+
+def Gen():
+    yield 100
+    yield 200
+    yield 300
+
+gen = Gen()
+print(next(gen))
+print(next(gen))
+print(next(gen))
