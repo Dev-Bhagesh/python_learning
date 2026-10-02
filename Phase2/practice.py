@@ -81,19 +81,61 @@
 #         print(i)
 
 # 7. Final Question
+# number = [10,20,30]
+# itr = iter(number)
+# print(next(itr))
+# print(next(itr))
+# print(next(itr))
 
-number = [10,20,30]
-itr = iter(number)
-print(next(itr))
-print(next(itr))
-print(next(itr))
+# def Gen():
+#     yield 100
+#     yield 200
+#     yield 300
 
-def Gen():
-    yield 100
-    yield 200
-    yield 300
+# gen = Gen()
+# print(next(gen))
+# print(next(gen))
+# print(next(gen))
 
-gen = Gen()
-print(next(gen))
-print(next(gen))
-print(next(gen))
+# 8. List comperansion task
+# lst = [x*x for x in range(1,11) if x % 2 == 0]
+# print(lst)
+
+# 9. Count frequency of games
+# games = ['GTA',"RDR2","Tomb Raider",'SpiderMan','Batman','Gta','rdr2','black myth wukong','gta']
+# games = [games.lower() for games in games]
+# print(games)
+# dictin = {}
+# for i in games:
+#     if i in dictin:
+#         dictin[i] += 1
+#     else:
+#         dictin[i] = 1
+
+# print(dictin)
+
+# 10. OOP practice task
+class Game:
+    def __init__(self,name,level):
+        self.name = name
+        self.level = level
+
+    def showInfo(self):
+        print(self.name)
+        print(self.level)
+
+    def levelUp(self):
+        self.level += 1
+        print(f'Level increased : {self.level}')
+
+batman = Game('batman',10)
+joker = Game('joker',9)
+
+batman.showInfo()
+joker.showInfo()
+
+batman.levelUp()
+joker.levelUp()
+
+batman.showInfo()
+joker.showInfo()
