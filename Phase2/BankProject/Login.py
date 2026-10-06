@@ -1,6 +1,7 @@
 import string
 import random
 from pathlib import Path
+import Bank
 
 class Login:
     USER_DIR = Path(__file__).parent/'user_accounts'
@@ -87,6 +88,8 @@ class Login:
 
             if user_account_login_name == user_name and str(user_account_login_password) == user_password:
                 print(f'Login Successfull Welcome {user_account_login_name}')
+
+                Bank.InAccount(user_id)
             
         else :
             print('User not Exist')
