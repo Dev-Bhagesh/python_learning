@@ -82,9 +82,9 @@ class Login:
             with open(f'{user_account}','r') as file:
                 lines = file.readlines()
                 user_name = lines[0].strip()
-                print(f'{user_name}')
+                # print(f'{user_name}')
                 user_password = lines[2].strip()
-                print(f'{user_password}')
+                # print(f'{user_password}')
 
             if user_account_login_name == user_name and str(user_account_login_password) == user_password:
                 print(f'Login Successfull Welcome {user_account_login_name}')

@@ -10,9 +10,9 @@ class Bank():
         self.user_path = Bank.USER_DIR/f'{self.userID}.txt'
         self.user_name = ''
 
-        if self.user_path.exists() and self.user_path.is_file():
-            print(f'{self.user_path.exists()}')
-            print(f'{self.user_path.is_file()}')
+        # if self.user_path.exists() and self.user_path.is_file():
+        #     print(f'{self.user_path.exists()}')
+        #     print(f'{self.user_path.is_file()}')
 
         with open(f'{self.user_path}', 'r') as file:
             lines = file.readlines()
@@ -23,18 +23,75 @@ class Bank():
 
     def CheckBalance(self):
         print(f'{self.__user_balance} Is Your Current Balance')
+        print('----------------------------------------------------------')
 
     def CreateAccount(self):
         pass
 
     def DipositMoney(self):
-        print('Diposite successfull')
+        amount = int(input('Enter the Amount you want to Diposit : '))
+        if amount > 0 : 
+            with open(f'{self.user_path}','r') as file:
+                lines = file.readlines()
+
+            bal_amount = int(lines[4].strip())
+            total_amount = bal_amount + amount
+            final_diposit_amount = str(total_amount)
+            lines[4] = f'{final_diposit_amount}\n'
+
+            with open(f'{self.user_path}','w') as file:
+                file.writelines(lines)
+            print('Diposite successfull')
+            print('-------------------------------------------------------')
+        else:
+            print('Invalid Amount')
 
     def WithDrawMoney(self):
-        print('Withdraw successfull')
+        with_amount = int(input('Enter the Withdraw Amount : '))
+        if with_amount < self.__user_balance and with_amount > 0:
+            with open(f'{self.user_path}','r') as file:
+                lines = file.readlines()
+
+            bal_amount = int(lines[4].strip())
+            final_amount = bal_amount - with_amount
+            lines[4] = str(final_amount)
+            with open(f'{self.user_path}','w') as file:
+                file.writelines(lines)
+            print('Withdraw successfull')
+        else:
+            print('Insufficiant Balance')
 
     def TransferMoney(self):
-        print('Service Currently Unavailable')
+        print('-----------------------------------------------------------')
+        recivers_id = input('Enter the Recivers ID : ')
+        recivers_path = self.USER_DIR/f'{recivers_id}.txt'
+        if recivers_path.exists() and recivers_path.is_file():
+            transfer_amount = int(input('Enter the Amount to be transfered : '))
+            if transfer_amount <= self.__user_balance and transfer_amount > 0:
+                with open(f'{self.user_path}','r') as file:
+                    sender_lines = file.readlines()
+                    sender_bal = int(sender_lines[4].strip())
+                    remaining_sender_bal = sender_bal - transfer_amount
+                    sender_lines[4] = str(remaining_sender_bal)
+
+                with open(f'{recivers_path}','r') as file:
+                    reciver_lines = file.readlines()
+                    reciver_bal = int(reciver_lines[4].strip())
+                    added_bal = reciver_bal + transfer_amount
+                    reciver_lines[4] = str(added_bal)
+
+                with open(f'{recivers_path}','w')as file:
+                    file.writelines(reciver_lines)
+
+                with open(f'{self.user_path}','w') as file:
+                    file.writelines(sender_lines)
+
+                print(f'Money transfered Successfully to accoount {recivers_id}')
+            else:
+                print('Insufficient amount')
+        else:
+            print('Recivers Account Not Found')
+        print('---------------------------------------------------------------------')
 
     def DeleteAccount(self):
         print('Account Delete Successfull')
