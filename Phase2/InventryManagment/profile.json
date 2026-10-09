@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Bhagesh",
+        "age": 21,
+        "role": "Full Stack Developer"
+    },
+    {
+        "name": "Saniya",
+        "age": 20,
+        "role": "Charted Accountant"
+    },
+    {
+        "name": "achika",
+        "age": 21,
+        "role": "cloude developer"
+    },
+    {
+        "name": "manisha",
+        "age": 21,
+        "role": "system developer"
+    }
+]
