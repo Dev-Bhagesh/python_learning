@@ -1,11 +1,15 @@
-def Choice(choice):
-    match choice:
-        case 1: pass
-        case 2: pass
-        case 3: pass
-        case _: return True
+import Login
 
-exit = False
+def Choice(choice):
+    login = Login.FirstLayer()
+    match choice:
+        case 1: login.CreateCharacter() 
+        #login.CreateCharacter()
+        case 2: login.LogintoCharacter()
+        case 3: pass
+        case _: return 1
+
+exit = 0
 print('=================================================')
 print('=*=*= Welcome To The Bhagesh Game World =*=*=')
 while 1:
@@ -14,7 +18,8 @@ while 1:
     print('| 2 | Login Into Your Character |')
     print('| 3 | Exit                      |')
     print('---------------------------------')
-    User_Choice = input('Enter the Choice : ')
-    exit = Choice(User_Choice)
-    if exit == True:
+  
+    User_Choice = int(input('Enter the Choice : '))
+    if User_Choice == 3:
         break
+    Choice(User_Choice)
