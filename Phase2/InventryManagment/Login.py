@@ -1,8 +1,10 @@
 import json
 import os
+import CharClass
 from pathlib import Path
 
 class FirstLayer():
+    CHAR_DIR = Path(__file__).parent/'Characters'
 
     def CreateCharacter(self):
         name = input('Enter the Name Of the Character : ')
@@ -24,8 +26,8 @@ class FirstLayer():
 
         print('Inverntry Will Be Available After Creation And Login Of The Character')
 
-        CHAR_DIR = Path(__file__).parent/'Characters'
-        Char_path = CHAR_DIR/f'characters.json'
+        
+        Char_path = FirstLayer.CHAR_DIR/f'characters.json'
         if Char_path.exists() and Char_path.stat().st_size > 0:
             with open(Char_path, 'r') as file:
                 Profiles = json.load(file)
@@ -42,6 +44,7 @@ class FirstLayer():
             'name' : name,
             'age' : age,
             'role' : role,
+            'inventory' : [],
         }
 
         Profiles.append(profile)
@@ -55,4 +58,26 @@ class FirstLayer():
        
 
     def LogintoCharacter(self):
-        print('Service Not Available Right Now')
+        print('-'*25,' Login ','-'*25)
+        id = int(input('Enter the id : '))
+        name = input('Enter the name : ')
+        password = input('Enter the password : ')
+
+        Char_path = FirstLayer.CHAR_DIR/f'characters.json'
+
+        try:
+            with open(f'{Char_path}','r') as file:
+                Profiles = json.load(file)
+        except FileNotFoundError:
+            print('Internal Database Error Please Try Later... ')
+            return
+        
+
+        Profile = next((profile for profile in Profiles if int(profile['id']) == id),None)
+
+        if Profile:
+            if Profile['name'] == name and Profile['password'] == password :
+                CharClass.SecondLayer(Profile)
+        else :
+            print('Wrong Credentials')
+            return
