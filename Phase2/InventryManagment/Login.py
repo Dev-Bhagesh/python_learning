@@ -44,7 +44,7 @@ class FirstLayer():
             'name' : name,
             'age' : age,
             'role' : role,
-            'inventory' : [],
+            'inventory' : [{'Weapons':[]},{'Potions':[]}],
         }
 
         Profiles.append(profile)

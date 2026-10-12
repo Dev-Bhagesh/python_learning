@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 class Item():
@@ -13,7 +14,7 @@ class Inventry():
         self.id = profile['id']
         self.age = profile['age']
         self.role = profile['role']
-        self.current_inventory = profile['invetory']
+        self.current_inventory = profile['inventory']
         self.file_path = Inventry.CHAR_DIR/f'characters.json'
         
     
@@ -87,11 +88,63 @@ class Weapon(Inventry):
                     'damage' : 30
                 }
             }
+        else:
+            print('You are not Eligible for weapon')
 
-    
+    def AddItemToInv(self):
+        print(f'*'*10 + ' Chose The Wepon You Want '+'*'*10)
+        for key,value in self.wepons_list.items():
+            print(f'{key} : {self.wepons_list[key]['name']}')
+            print(f'{key} : {self.wepons_list[key]['damage']}')
+            print(f'{key} : {self.wepons_list[key]['discription']}')
+            print('\n')
+            print('-'*25)
+
+        choice = int(input('Enter the Choice : '))
+
+        weapon_selected = self.wepons_list[choice]
+        Weapons = self.current_inventory[0]['Weapons']
+
+        if any(weapon_selected['name'] == isweapon['name'] for isweapon in Weapons):
+            print('Weapon alredy exists in inventry')
+        else:
+            with open(f'{self.file_path}','r') as file:
+                ReadFile = json.load(file)
+            
+
+            ReadProfile = next(profile for profile in ReadFile if profile['id'] == self.id)
+            ReadProfile['inventory'][0]['Weapons'].append(self.wepons_list[choice])
+
+            # ReadFile[self.id] = ReadProfile
+
+            with open(f'{self.file_path}','w') as file :
+                json.dump(ReadFile,file,indent=4)
+        
 
 class Potion(Inventry):
-    pass
+    def __init__(self, profile):
+        super().__init__(profile)
+        self.postions = {
+
+            1:{
+                'name' : 'Healing Potion',
+                'discription' : 'Heals 30 HP of the character .',
+                'health' : 30,
+            },
+            2:{
+                'name' : 'Antidote',
+                'discription' : 'Remove any status condition on character .',
+                'health' : 0
+            },
+            3:{
+                'name' : 'Rage Potion',
+                'discription' : 'Rages the Character and increase the attack damage slightly .',
+                'damage' : 2
+            }
+        }
+
+    def AddItemToInv(self):
+        pass
 
 def InvEntry(profile):
     name = profile['name']
@@ -117,5 +170,7 @@ def InvEntry(profile):
 
     if choice == 1:
         weapon = Weapon(profile)
+        weapon.AddItemToInv()
     else:
         potion = Potion(profile)
+        potion.AddItemToInv()
