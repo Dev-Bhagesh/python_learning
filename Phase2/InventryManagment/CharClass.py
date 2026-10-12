@@ -2,8 +2,11 @@
 class Character():
     pass
 
-def choice(choice):
-    pass
+def Choice(choice,profile):
+    match choice:
+        case 1 :pass
+        case 2 :pass
+        case _ :pass
 
 def SecondLayer(profile):
     name = profile['name']
@@ -34,9 +37,23 @@ def SecondLayer(profile):
                     print(f"  Quantity : {potion['quantity']}")
     else:
         print("  Your inventory is empty!")
-        
-    while 1 :
 
-        choice = int(input('Currently all services are down so please press 3 to exit : '))
-        if choice == 3:
+    print('-'*50)
+    
+    while 1 :
+        print(f'-'*25+' Chose Options From Below '+f'-'*25)    
+        tasks = {
+            1:'Add Item To Inventry',
+            2:'Remove Item From Invetry',
+            3:'Exit'
+        }
+
+        for key,value in tasks.items():
+            print(f'{key} : {value}')
+
+        choice = int(input('Enter Your Choice : '))
+
+        if choice < 3 and choice > 0 :
+            Choice(choice,profile)
+        else:
             break
