@@ -5,8 +5,8 @@ class Character():
 
 def Choice(choice,profile):
     match choice:
-        case 1 : Inventry.InvEntry(profile)
-        case 2 : print('Removal of Items not possible at')
+        case 1 : Inventry.AddingItems(profile)
+        case 2 : Inventry.RemovingItems(profile)
         case _ : print('Invalid choice')
 
 def SecondLayer(profile):
@@ -52,7 +52,7 @@ def SecondLayer(profile):
                 for potion in items['Potions']:
                     potion_name = next(iter(potion.values()))
                     print(f' Potion    : {potion_name}')
-                    print(f' Attribute : {potion['disctiption']}')
+                    print(f' Attribute : {potion['discription']}')
         print('\n')
     else:
         print("  Your inventory is empty!")
