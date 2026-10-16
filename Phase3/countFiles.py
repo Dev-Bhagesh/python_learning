@@ -1,18 +1,29 @@
 from pathlib import Path
 
-file_path = Path('Game')
-file_count = 0
-dir_count = 0
-txt_count = 0
+file_path = Path('Game2')
 
-for item in file_path.iterdir():
-    if item.is_file() :
-        file_count += 1
-        if item.suffix == '.txt':
-            txt_count += 1
-    elif item.is_dir() :
-        dir_count += 1
+if not file_path.is_dir():
+    print('Folder not exist')
+else:
+    try:
+        for file in file_path.rglob('*.json'):
+            print(file)
 
-print(f'TXT file count {txt_count}')
-print(f'Dirctory count {dir_count}')
-print(f'File count {file_count}')
+        print('\n')
+
+        for file in file_path.rglob('*.txt'):
+            print(file)
+
+        print('\n')
+        count = 0
+        total_size = 0
+        for file in file_path.rglob('*'):
+            if file.is_file() and file.stat().st_size > 100:
+                print(file)
+                total_size += file.stat().st_size
+                count += 1
+
+        print(f'The total files who are larger then 100 bytes : {count}')
+        print(f'Total size of all files : {total_size}')
+    except FileNotFoundError:
+        print('Files Not found')
