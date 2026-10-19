@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 *.json
 *.txt
+*.jpg
+*.png
+*.jpeg
+*.mp4
