@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 
-def FindDir(direct):
+def FindDir(direct,fold):
     dire = direct
 
     while True:
@@ -10,12 +10,13 @@ def FindDir(direct):
         
         root = dire
         for item in root.iterdir():
-            if item.is_dir() and item.name == 'Organizer':
+            if item.is_dir() and item.name == fold:
                 return item
         dire = dire.parent
 
 cwd = Path.cwd()
-Org_path = FindDir(cwd)
+fold = 'Organizer'
+Org_path = FindDir(cwd,fold)
 
 if Org_path is not None:
     if Org_path.exists() and Org_path.is_dir():
