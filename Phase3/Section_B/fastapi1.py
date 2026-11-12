@@ -1,4 +1,4 @@
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI,HTTPException,Header
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -26,7 +26,7 @@ def GetPoke(pokemonName:str):
         'Pokemon':pokemon_db
     }
 
-@app.get('/{name}')
+@app.get('/name/{name}')
 def get_Name(name:str , type:str='electric' ,level:int = 20):
     return {
         'Name':name,
@@ -83,3 +83,23 @@ def PokeUpdate(pokemon : Pokemonupdate,pokemon_name :str):
     #     'message':'Pokemon updated',
     #     'Pokemon':pokemon_db[index]
     # }
+
+key = 'hello'
+@app.get('/Get-key')
+def GetKey():
+
+    return({
+        'message':'Successfully created Key',
+        'key':key
+    })
+
+@app.get('/protected')
+def Protected(x_api_key : str = Header()): 
+    if x_api_key == key:
+        return({
+            'message':'successfully accessing the protected route'
+        })
+    else:
+        return({
+            'message':'Not authoarized'
+        })
