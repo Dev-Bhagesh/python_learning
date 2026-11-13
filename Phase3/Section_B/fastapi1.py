@@ -1,3 +1,4 @@
+import time
 from fastapi import FastAPI,HTTPException,Header
 from pydantic import BaseModel
 
@@ -84,22 +85,88 @@ def PokeUpdate(pokemon : Pokemonupdate,pokemon_name :str):
     #     'Pokemon':pokemon_db[index]
     # }
 
-key = 'hello'
+keyran = 0
 @app.get('/Get-key')
 def GetKey():
-
-    return({
-        'message':'Successfully created Key',
-        'key':key
-    })
-
-@app.get('/protected')
-def Protected(x_api_key : str = Header()): 
-    if x_api_key == key:
+    if keyran == 0:
         return({
-            'message':'successfully accessing the protected route'
+            'message':'Successfully created Key',
+            'key':rate_limits['abc123']
         })
     else:
         return({
-            'message':'Not authoarized'
+            'message':'Successfully Created key',
+            'key':rate_limits['xyz456']
         })
+
+
+# current_window = time.time()
+rate_limits = {
+    "abc123":{
+        "count":0,
+        "window_start":0,
+    },
+    "xyz456":{
+        "count":0,
+        "window_start":0
+    }
+}
+
+@app.get('/protected')
+def Protected(x_api_key : str = Header()): 
+
+    if x_api_key not in rate_limits:
+        raise HTTPException(status_code=401,detail='Unautharised')
+
+    key_data = rate_limits[x_api_key]
+    current_time = time.monotonic()
+    print("Current time:", current_time)
+    print("Window start:", key_data['window_start'])
+    print("Window expires:", key_data['window_start'] + 60)
+    print("Request count:", key_data['count'])
+    if key_data['window_start'] + 60 < current_time :
+        key_data['window_start'] = current_time
+        key_data['count'] = 0
+        print('Window time reset complete and count reset done')
+        print("After reset:", key_data)
+
+    if key_data['count'] >= 5:
+        raise HTTPException(status_code=429,detail='Too many requests')
+    else:
+        key_data['count'] += 1
+        return('Welcome You Successfully Accessed The Protected Route')
+
+pokemon_db = [
+    {"id": 101, "name": "Pikachu"},
+    {"id": 102, "name": "Eevee"},
+    {"id": 103, "name": "Charmander"},
+    {"id": 104, "name": "Bulbasaur"},
+    {"id": 105, "name": "Squirtle"},
+    {"id": 106, "name": "Snorlax"},
+    {"id": 107, "name": "Mew"},
+    {"id": 108, "name": "Gengar"},
+    {"id": 109, "name": "Ditto"},
+    {"id": 110, "name": "Dragonite"}
+]
+
+@app.get('/cursor')
+def CursorTest(limit:int = 3,cursor:int | None = None):
+    start_index = 0
+    if cursor is not None:
+        for index , pokemon in enumerate(pokemon_db):
+            if pokemon['id'] == cursor:
+                start_index = index + 1
+                break
+
+    end_index = start_index + limit
+    batch = pokemon_db[start_index:end_index]
+
+    if end_index<len(pokemon_db) and batch:
+        next_cursor = batch[-1]["id"]
+    else:
+        next_cursor = None
+
+    return{
+        "result":batch,
+        "next_cursor":next_cursor
+    }
