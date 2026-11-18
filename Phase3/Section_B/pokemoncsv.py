@@ -5,7 +5,7 @@ import requests
 url = "https://pokeapi.co/api/v2/pokemon/"
 
 params = {
-    'limit' : 5,
+    'limit' : 151,
     'offset':0
 }
 
@@ -26,7 +26,7 @@ lim = 0
 
 
 pokemon_list = []
-while lim<=3:
+while lim<=1:
     if lim <= 0:
         response = requests.get(url,params=params)
     else:
@@ -70,5 +70,5 @@ with open('pokemon.csv','a',newline='') as file:
     writer.writeheader()
     writer.writerows(pokemon_list)
 
-print(json.dumps(pokemon_list,indent=4))
+# print(json.dumps(pokemon_list,indent=4))
     
