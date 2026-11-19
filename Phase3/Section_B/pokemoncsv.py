@@ -5,7 +5,7 @@ import requests
 url = "https://pokeapi.co/api/v2/pokemon/"
 
 params = {
-    'limit' : 151,
+    'limit' : 15,
     'offset':0
 }
 
@@ -58,7 +58,7 @@ while lim<=1:
 
         
 
-with open('pokemon.csv','a',newline='') as file:
+with open('poke.csv','a',newline='') as file:
     writer = csv.DictWriter(file,fieldnames=[
         'pokemon_id',
         'pokemon_name',
