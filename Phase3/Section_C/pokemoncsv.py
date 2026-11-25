@@ -5,7 +5,7 @@ import requests
 url = "https://pokeapi.co/api/v2/pokemon/"
 
 params = {
-    'limit' : 15,
+    'limit' : 3,
     'offset':0
 }
 
@@ -34,6 +34,9 @@ while lim<=1:
     lim += 1
     data = response.json()
     url = data['next']
+    print('-'*25)
+    print(json.dumps(data['results']))
+    print('-'*25)
     for item in data['results']:
         pokemon_detail_url = item['url']
         pokemon_detail_response = requests.get(pokemon_detail_url)
@@ -47,7 +50,7 @@ while lim<=1:
         # print(json.dumps(pokemon_details['stats'],indent=4))
         # print('='*50)
         pokemon_type = ','.join(item['type']['name'] for item in pokemon_details['types'])
-        pokemon_list.append({''
+        pokemon_list.append({
             'pokemon_id':pokemon_details['id'],
             'pokemon_name':pokemon_details['name'],
             'pokemon_height':pokemon_details['height'],
