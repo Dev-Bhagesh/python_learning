@@ -21,7 +21,9 @@ with open('pokemon.csv','r',newline='',encoding='utf-8-sig') as file:
 
     avgWeight = sumofweights/totalRecords
 
-print(f'The Total Records of Pokemon : {totalRecords}')
-print(f'The Maximum Weight of Pokemon in Records : {maxWeight}')
-print(f'The Minimum Weight of Pokemon in Records : {minWeight}')
-print(f'The Avarage Weight of pokemon in Records : {avgWeight}')
+
+with open('pokemon_report.txt','w') as file:
+    file.write(f'The Total Records of Pokemon : {totalRecords}\n')
+    file.write(f'The Maximum Weight of Pokemon in Records : {maxWeight}\n')
+    file.write(f'The Minimum Weight of Pokemon in Records : {minWeight}\n')
+    file.write(F'The Avarage Weight of Pokemon in Records : {avgWeight}\n')
